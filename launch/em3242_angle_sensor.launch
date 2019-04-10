@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="em3242_angle_sensor_ros" name="em3242_angle_sensor" type="em3242_angle_sensor_node.py" >
+    </node>
+</launch>
