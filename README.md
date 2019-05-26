@@ -1,9 +1,9 @@
-## em3242_angle_sensor_ros 
+# em3242_angle_sensor_ros 
 
 ROS interface for the EM3242 absolute angle sensor (connected via an Arduino). 
 
 
-# Installation
+## Installation
 
 1. Install ROS. Instructions can be found [here](http://wiki.ros.org/kinetic/Installation/Ubuntu) 
 if you have not already done this.  Tested with ros kinetic, desktop install
@@ -23,13 +23,13 @@ $catkin_make
 
 ```
 
-# Launching the em3242 angle sensor node
+## Launching the em3242 angle sensor node
 
 ```bash
 $rosluanch em3242_angle_sensor_ros em3242_angle_sensor.launch
 ```
 
-# EM3242_AngleSensorData.msg
+## EM3242_AngleSensorData.msg
 
 ```
 Header header
