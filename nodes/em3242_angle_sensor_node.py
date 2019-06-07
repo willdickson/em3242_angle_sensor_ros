@@ -22,7 +22,7 @@ class EM3242_AngleSensorNode(object):
         self.data_publisher = rospy.Publisher('em3242_angle_sensor_data', EM3242_AngleSensorData, queue_size=10) 
 
         self.port = rospy.get_param('/em3242_angle_sensor/port', '/dev/ttyACM0')
-        self.max_speed = rospy.get_param('/em3242_angle_sensor/max_speed', 2000.0)
+        self.max_speed = rospy.get_param('/em3242_angle_sensor/max_speed', 1000.0)
         self.em3242 = EM3242_AngleSensor(self.port,sigint_handler=False)
         self.em3242.start(callback=self.on_em3242_data)
 

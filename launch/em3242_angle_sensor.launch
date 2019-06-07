@@ -1,6 +1,6 @@
 <launch>
     <node pkg="em3242_angle_sensor_ros" name="em3242_angle_sensor" type="em3242_angle_sensor_node.py" >
         <param name="port" value="/dev/ttyACM0" />
-        <param name="max_speed" value="2000.0" />
+        <param name="max_speed" value="1000.0" />
     </node>
 </launch>
