@@ -3,6 +3,7 @@ from __future__ import print_function
 import threading
 import rospy
 import std_msgs.msg
+import numpy as np
 
 from em3242_angle_sensor import EM3242_AngleSensor
 from em3242_angle_sensor_ros.msg import EM3242_AngleSensorData 
@@ -27,16 +28,15 @@ class EM3242_AngleSensorNode(object):
     def update_cumulative_angle(self,angle):
         if self.is_first:
             self.is_first = False
+            self.last_angle = angle
             self.cumulative_angle = angle
         else:
-            diff_angle = angle - self.last_angle
-            if diff_angle > 180.0:
-                self.cumulative_angle += (360 - angle) - self.last_angle
-            elif diff_angle < -180.0:
-                self.cumulative_angle += angle + (360.0 - self.last_angle)
+            step = get_cumulative_step(angle, self.last_angle)
+            if abs(cum_step) < max_step:
+                self.last_angle = angle
             else:
-                self.cumulative_angle += diff_angle
-        self.last_angle = angle
+                step = 0.0
+            self.cumulative_angle += step
 
 
     def on_em3242_data(self,angle):
@@ -52,6 +52,17 @@ class EM3242_AngleSensorNode(object):
         while not rospy.is_shutdown():
             self.loop_rate.sleep()
         self.em3242.stop()
+
+
+# Utility functions
+# --------------------------------------------------------------------------------------
+
+def get_cumulative_step(angle_curr, angle_last):
+    inner_dist = abs(angle_curr - angle_last)
+    outer_dist = 360.0 - inner_dist
+    step_sign = np.sign(outer_dist - inner_dist)*np.sign(angle_curr - angle_last)
+    return step_sign*min(inner_dist, outer_dist)
+
 
 # ---------------------------------------------------------------------------------------
 if __name__ == '__main__':
